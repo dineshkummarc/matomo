@@ -600,9 +600,18 @@ export default defineComponent({
       );
     },
     reportSegmentInlineHelp() {
+      const segmentManagementPageParams = [
+        'module=CoreHome',
+        'action=index',
+        'category=General_Visitors',
+        'subcategory=CoreHome_Segments',
+      ].join('&');
+      const segmentManagementPageUrl = piwikHelper.getCurrentQueryStringWithParametersModified(
+        segmentManagementPageParams,
+      );
       return translate(
         'ScheduledReports_Segment_HelpScheduledReport',
-        '<a href="./" rel="noreferrer noopener" target="_blank">',
+        `<a href="${segmentManagementPageUrl}" rel="noreferrer noopener" target="_blank">`,
         '</a>',
         translate('SegmentEditor_DefaultAllVisits'),
         translate('SegmentEditor_AddNewSegment'),
