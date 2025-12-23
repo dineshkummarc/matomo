@@ -521,7 +521,9 @@ Segmentation = (function($) {
                 const comparisonService = window.CoreHome.ComparisonsStoreInstance;
                 const segmentDefinition = $button.closest('li').data('definition');
                 if ($button.attr('data-state') === 'active') {
-                  comparisonService.removeSegmentComparisonByDefinition(segmentDefinition);
+                  if (segmentDefinition) {
+                    comparisonService.removeSegmentComparisonByDefinition(segmentDefinition);
+                  }
                 } else {
                   comparisonService.addSegmentComparison({
                     segment: segmentDefinition,
