@@ -610,11 +610,9 @@ export default defineComponent({
         segmentManagementPageParams,
       );
       return translate(
-        'ScheduledReports_Segment_HelpScheduledReport',
+        'ScheduledReports_HelpSegmentManagement',
         `<a href="${segmentManagementPageUrl}" rel="noreferrer noopener" target="_blank">`,
         '</a>',
-        translate('SegmentEditor_DefaultAllVisits'),
-        translate('SegmentEditor_AddNewSegment'),
       );
     },
     timezoneOffset() {
