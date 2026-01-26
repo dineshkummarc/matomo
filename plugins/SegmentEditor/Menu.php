@@ -24,18 +24,17 @@ class Menu extends \Piwik\Plugin\Menu
 {
     public function configureAdminMenu(MenuAdmin $menu)
     {
-        $idSite = Request::fromRequest()->getIntegerParameter('idSite', 0);
-        if (Piwik::isUserHasWriteAccess($idSite)) {
-            $menu->addMeasurableItem(
-                'CoreHome_Segments',
-                $this->urlForModuleAction('CoreHome', 'index', [
-                    'category' => 'General_Visitors',
-                    'subcategory' => 'CoreHome_Segments',
-                ]),
-                19,
-                Piwik::translate('SegmentEditor_ManageSegments'),
-                'icon-outlink'
-            );
-        }
+        $idSite = Request::fromRequest()->getIntegerParameter('idSite', 1);
+        $menu->addMeasurableItem(
+            'CoreHome_Segments',
+            $this->urlForModuleAction('CoreHome', 'index', [
+                'idSite' => $idSite,
+                'category' => 'General_Visitors',
+                'subcategory' => 'CoreHome_Segments',
+            ]),
+            19,
+            Piwik::translate('SegmentEditor_ManageSegments'),
+            'icon-outlink'
+        );
     }
 }
