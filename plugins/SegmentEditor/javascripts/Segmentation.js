@@ -462,13 +462,16 @@ Segmentation = (function($) {
             "userLogin": piwik.userLogin,
             "idSegment": idSegment,
           }, 'POST');
-          ajaxHandler.setErrorCallback(function () {
-            segment.starred = !segment.starred;
-            updateStarredSegment(segment, true);
-          });
+          ajaxHandler.useCallbackInCaseOfError();
           ajaxHandler.setCallback(function (response) {
-            segment.starred_by = response.starred_by;
-            updateStarredSegment(segment);
+            if (!response || response.result == 'error') {
+              segment.starred = !segment.starred;
+              updateStarredSegment(segment, true);
+            } else {
+              segment.starred = !!response.starred;
+              segment.starred_by = response.starred_by;
+              updateStarredSegment(segment);
+            }
           });
           ajaxHandler.send();
         }
