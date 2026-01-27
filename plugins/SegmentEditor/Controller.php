@@ -23,9 +23,9 @@ use Piwik\View;
  */
 class Controller extends \Piwik\Plugin\Controller
 {
-    private static $POSITIVE = 'positive';
-    private static $NEGATIVE = 'negative';
-    private static $STABLE = 'stable';
+    private const POSITIVE = 'positive';
+    private const NEGATIVE = 'negative';
+    private const STABLE = 'stable';
 
     /** The requested period */
     protected $period;
@@ -83,33 +83,36 @@ class Controller extends \Piwik\Plugin\Controller
         return $view->render();
     }
 
-    protected function getEvolutionDirection($currentValue, $pastValue): string
+    protected function getEvolutionDirection(int $currentValue, int $pastValue): string
     {
         if ($currentValue > $pastValue) {
-            return self::$POSITIVE;
+            return self::POSITIVE;
         }
 
         if ($currentValue < $pastValue) {
-            return self::$NEGATIVE;
+            return self::NEGATIVE;
         }
 
-        return self::$STABLE;
+        return self::STABLE;
     }
 
-    protected function getEvolutionIcon($direction): string
+    /*
+     * @param self::POSITIVE|self::NEGATIVE|self::STABLE $direction
+     */
+    protected function getEvolutionIcon(string $direction): string
     {
-        if ($direction === self::$POSITIVE) {
+        if ($direction === self::POSITIVE) {
             return 'plugins/MultiSites/images/arrow_up.png';
         }
 
-        if ($direction === self::$NEGATIVE) {
+        if ($direction === self::NEGATIVE) {
             return 'plugins/MultiSites/images/arrow_down.png';
         }
 
         return 'plugins/MultiSites/images/stop.png';
     }
 
-    protected function getSegmentSparklineUrl($segment): string
+    protected function getSegmentSparklineUrl(array $segment): string
     {
         $params = $this->getGraphParamsModified([
             'viewDataTable' => 'sparkline',
@@ -123,22 +126,22 @@ class Controller extends \Piwik\Plugin\Controller
 
     private function getSparklineTooltipKey(): string
     {
-        if ($this->period === 'day') {
-            return 'SegmentEditor_SparklineTooltipDays';
+        switch ($this->period) {
+            case 'day':
+                return 'SegmentEditor_SparklineTooltipDays';
+            case 'week':
+                return 'SegmentEditor_SparklineTooltipWeeks';
+            case 'month':
+                return 'SegmentEditor_SparklineTooltipMonths';
+            case 'year':
+                return 'SegmentEditor_SparklineTooltipYears';
         }
-        if ($this->period === 'week') {
-            return 'SegmentEditor_SparklineTooltipWeeks';
-        }
-        if ($this->period === 'month') {
-            return 'SegmentEditor_SparklineTooltipMonths';
-        }
-        if ($this->period === 'year') {
-            return 'SegmentEditor_SparklineTooltipYears';
-        }
-
         return '';
     }
 
+    /**
+     * @return array<string, string>
+     */
     private function getTranslations(): array
     {
         $translationKeys = array(

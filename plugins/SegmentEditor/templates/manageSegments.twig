@@ -46,7 +46,7 @@
                                     </button>
                                 {% endif %}
                             </td>
-                            <td title="{{ segment.name }}">{{ segment.name }}</td>
+                            <td title="{{ segment.name }}">{{ segment.name|rawSafeDecoded }}</td>
                             <td class="entityTable_Numeric">{{ segmentData[loop.index0].nb_visits }}</td>
                             <td class="entityTable_Numeric">{{ segmentData[loop.index0].nb_actions }}</td>
                             <td class="entityTable_Numeric">
