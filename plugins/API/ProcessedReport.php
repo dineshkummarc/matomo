@@ -552,6 +552,7 @@ class ProcessedReport
         } else {
             $this->removeEmptyColumns($columns, $reportMetadata, $dataTable);
             list($newReport, $rowsMetadata) = $this->handleSimpleDataTable($idSite, $dataTable, $columns, $hasDimension, $showRawMetrics, $formatMetrics);
+            $newReport->setAllTableMetadata($dataTable->getAllTableMetadata());
 
             $totals = $this->aggregateReportTotalValues($dataTable, $totals);
         }
